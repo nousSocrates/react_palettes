@@ -8,64 +8,75 @@ import { PreviewShell } from "./components/preview/PreviewShell";
 import { Dashboard } from "./components/preview/Dashboard";
 import { Courses } from "./components/preview/Courses";
 import { Lesson } from "./components/preview/Lesson";
+import { generateDarkTokens } from "./utils/darkMode";
 
 type Screen = "dashboard" | "courses" | "lesson";
+type ThemeMode = "light" | "dark";
 
 function App() {
   const [activePalette, setActivePalette] = useState<Palette>(palettes[0]);
   const [isInspectorOpen, setInspectorOpen] = React.useState(false);
   const [screen, setScreen] = useState<Screen>("dashboard");
+  const [mode, setMode] = useState<ThemeMode>("light");
+  const baseColors =
+    mode === "light"
+      ? activePalette.colors
+      : generateDarkTokens(activePalette.colors);
 
   const styleVars = {
-    // Base tokens
-    "--color-primary": activePalette.colors.primary,
-    "--color-secondary": activePalette.colors.secondary,
+    "--color-primary": baseColors.primary,
+    "--color-secondary": baseColors.secondary,
+    "--color-accent": baseColors.accent,
 
-    "--color-accent": activePalette.colors.accent,
-    "--color-background": activePalette.colors.background,
-    "--color-surface": activePalette.colors.surface,
-    "--color-text": activePalette.colors.text,
+    "--color-background": baseColors.background,
+    "--color-surface": baseColors.surface,
+    "--color-surface-alt": baseColors.surfaceAlt,
 
-    // Derived tokens
-    "--color-primary-hover": adjustColor(activePalette.colors.primary, -20),
-    "--color-secondary-hover": adjustColor(activePalette.colors.secondary, -20),
+    "--color-text": baseColors.text,
+    "--color-text-muted": baseColors.textMuted,
+    "--color-border": baseColors.border,
 
-    "--color-text-muted": withOpacity(activePalette.colors.text, 0.6),
-    "--color-border": withOpacity(activePalette.colors.text, 0.15),
-    "--color-surface-alt": withOpacity(activePalette.colors.text, 0.03),
+    "--color-primary-hover": adjustColor(baseColors.primary, -15),
   } as React.CSSProperties;
 
   return (
     <div className="app" style={styleVars}>
+      {/* LEFT COLUMN */}
       <aside className="sidebar">
+        <button onClick={() => setMode(mode === "light" ? "dark" : "light")}>
+          {mode === "light" ? "🌙 Dark" : "☀️ Light"}
+        </button>
+
         <PaletteList
           palettes={palettes}
           activeId={activePalette.id}
           onSelect={setActivePalette}
         />
       </aside>
-      <div className="screen-switcher">
-        <button
-          onClick={() => setScreen("dashboard")}
-          className={screen === "dashboard" ? "active" : ""}
-        >
-          Dashboard
-        </button>
-        <button
-          onClick={() => setScreen("courses")}
-          className={screen === "courses" ? "active" : ""}
-        >
-          Courses
-        </button>
-        <button
-          onClick={() => setScreen("lesson")}
-          className={screen === "lesson" ? "active" : ""}
-        >
-          Lesson
-        </button>
-      </div>
 
+      {/* CENTER COLUMN */}
       <main className="preview">
+        <div className="screen-switcher">
+          <button
+            onClick={() => setScreen("dashboard")}
+            className={screen === "dashboard" ? "active" : ""}
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={() => setScreen("courses")}
+            className={screen === "courses" ? "active" : ""}
+          >
+            Courses
+          </button>
+          <button
+            onClick={() => setScreen("lesson")}
+            className={screen === "lesson" ? "active" : ""}
+          >
+            Lesson
+          </button>
+        </div>
+
         <PreviewShell screen={screen} onNavigate={setScreen}>
           {screen === "dashboard" && <Dashboard />}
           {screen === "courses" && <Courses />}
@@ -73,23 +84,17 @@ function App() {
         </PreviewShell>
       </main>
 
-      {/* Desktop Inspector */}
+      {/* RIGHT COLUMN (DESKTOP ONLY) */}
       <aside className="inspector desktop-only">
         <Inspector palette={activePalette} />
       </aside>
 
-      {/* Mobile Inspector Drawer */}
+      {/* MOBILE ONLY (OUTSIDE GRID FLOW) */}
       <div className={`inspector-drawer ${isInspectorOpen ? "open" : ""}`}>
         <div className="inspector-drawer__header">
           <span>Inspector</span>
-          <button
-            onClick={() => setInspectorOpen(false)}
-            aria-label="Close inspector"
-          >
-            ✕
-          </button>
+          <button onClick={() => setInspectorOpen(false)}>✕</button>
         </div>
-
         <div className="inspector-drawer__content">
           <Inspector palette={activePalette} />
         </div>

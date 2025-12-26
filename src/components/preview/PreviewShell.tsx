@@ -12,6 +12,7 @@ export function PreviewShell({ children, screen, onNavigate }: Props) {
       <header className="lms-header">
         <strong>Socrates LMS</strong>
         <span className="lms-user">Student</span>
+       
       </header>
 
       <div className="lms-body">
