@@ -1,25 +1,48 @@
-// Darken or lighten a hex color by percentage
-export function adjustColor(hex: string, percent: number) {
-  const num = parseInt(hex.replace("#", ""), 16);
+/**
+ * Adjusts a hex color by a percentage.
+ * Negative = darker, Positive = lighter
+ */
+export function adjustColor(hex: string, amount: number): string {
+  let color = hex.replace("#", "");
 
-  const r = Math.min(255, Math.max(0, (num >> 16) + percent));
-  const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + percent));
-  const b = Math.min(255, Math.max(0, (num & 0x0000ff) + percent));
-
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
-// Apply opacity to rgb/hex safely
-export function withOpacity(color: string, opacity: number) {
-  if (color.startsWith("rgb")) {
-    return color.replace("rgb", "rgba").replace(")", `, ${opacity})`);
+  if (color.length === 3) {
+    color = color
+      .split("")
+      .map((c) => c + c)
+      .join("");
   }
 
-  const hex = color.replace("#", "");
-  const bigint = parseInt(hex, 16);
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
+  const num = parseInt(color, 16);
+
+  let r = (num >> 16) + amount;
+  let g = ((num >> 8) & 0x00ff) + amount;
+  let b = (num & 0x0000ff) + amount;
+
+  r = Math.max(0, Math.min(255, r));
+  g = Math.max(0, Math.min(255, g));
+  b = Math.max(0, Math.min(255, b));
+
+  return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+}
+
+/**
+ * Applies opacity to a hex color and returns rgba()
+ */
+export function withOpacity(hex: string, opacity: number): string {
+  let color = hex.replace("#", "");
+
+  if (color.length === 3) {
+    color = color
+      .split("")
+      .map((c) => c + c)
+      .join("");
+  }
+
+  const num = parseInt(color, 16);
+
+  const r = num >> 16;
+  const g = (num >> 8) & 0x00ff;
+  const b = num & 0x0000ff;
 
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }

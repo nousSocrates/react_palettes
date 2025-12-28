@@ -1,20 +1,27 @@
-import { adjustColor, withOpacity } from "./colors";
+// src/utils/darkMode.ts
+// src/utils/darkMode.ts
+import type { BaseColorTokens, ThemeColorTokens } from "../types/colors";
+import { adjustColor } from "../utils/colors";
 
-type BaseColors = Record<string, string>;
-
-export function generateDarkTokens(light: BaseColors): BaseColors {
+export function generateDarkTokens(
+  light: BaseColorTokens
+): ThemeColorTokens {
   return {
+    ...light,
+
     primary: adjustColor(light.primary, -10),
     secondary: adjustColor(light.secondary, -10),
-    accent: light.accent,
 
-    background: "#0f172a", // near-slate
-    surface: "#111827", // elevated surface
-    surfaceAlt: withOpacity("#ffffff", 0.04),
+    background: "#0f172a",
+    surface: "#111827",
+    surfaceAlt: "#1f2937",
 
     text: "#e5e7eb",
-    textMuted: withOpacity("#e5e7eb", 0.6),
+    textMuted: "#9ca3af",
 
-    border: withOpacity("#ffffff", 0.12),
+    border: "rgba(255,255,255,0.12)",
+
+    textOnSurface: "#e5e7eb",
+    textOnSurfaceMuted: "#9ca3af",
   };
 }

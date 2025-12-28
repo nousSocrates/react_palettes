@@ -30,11 +30,8 @@ export function Inspector({ palette }: InspectorProps) {
 
   return (
     <div className="inspector-panel">
-      <h2 className="inspector-title">Inspector</h2>
-
       <div className="inspector-section">
         <h3 className="inspector-subtitle">Color Tokens</h3>
-
         <ul className="token-list">
           {entries.map(([key, value]) => (
             <li key={key} className="token-row">

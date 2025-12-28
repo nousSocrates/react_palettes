@@ -17,24 +17,24 @@ export function PreviewShell({ children, screen, onNavigate }: Props) {
 
       <div className="lms-body">
         <nav className="lms-sidebar">
-          <a
+          <button
             className={screen === "dashboard" ? "active" : ""}
             onClick={() => onNavigate("dashboard")}
           >
             Dashboard
-          </a>
-          <a
+          </button>
+          <button
             className={screen === "courses" ? "active" : ""}
             onClick={() => onNavigate("courses")}
           >
             Courses
-          </a>
-          <a
+          </button>
+          <button
             className={screen === "lesson" ? "active" : ""}
             onClick={() => onNavigate("lesson")}
           >
             Lesson
-          </a>
+          </button>
         </nav>
 
         <section className="lms-content">{children}</section>

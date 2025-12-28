@@ -1,16 +1,10 @@
+// src/data/palettes.ts
+import type { BaseColorTokens } from "../types/colors";
+
 export type Palette = {
   id: string;
   name: string;
-  colors: {
-    primary: string;
-    secondary: string;
-    accent: string;
-    background: string;
-    surface: string;
-    text: string;
-    textMuted: string;
-    border: string;
-  };
+  colors: BaseColorTokens;
 };
 
 export const palettes: Palette[] = [
