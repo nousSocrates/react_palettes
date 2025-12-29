@@ -33,8 +33,8 @@ export function PaletteList({
               </div>
 
               <div className="palette-card__meta">
+                <small>{palette.id}. &nbsp;</small>
                 <strong>{palette.name}</strong>
-                <small>{palette.id}</small>
               </div>
             </li>
           );

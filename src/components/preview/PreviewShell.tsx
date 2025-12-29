@@ -1,4 +1,4 @@
-type Screen = "dashboard" | "courses" | "lesson";
+type Screen = "dashboard" | "courses" | "lesson" | "assessment";
 
 type Props = {
   children: React.ReactNode;
@@ -12,7 +12,6 @@ export function PreviewShell({ children, screen, onNavigate }: Props) {
       <header className="lms-header">
         <strong>Socrates LMS</strong>
         <span className="lms-user">Student</span>
-       
       </header>
 
       <div className="lms-body">
@@ -34,6 +33,12 @@ export function PreviewShell({ children, screen, onNavigate }: Props) {
             onClick={() => onNavigate("lesson")}
           >
             Lesson
+          </button>
+          <button
+            className={screen === "assessment" ? "active" : ""}
+            onClick={() => onNavigate("assessment")}
+          >
+            Assessment
           </button>
         </nav>
 

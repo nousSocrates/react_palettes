@@ -9,8 +9,8 @@ export type Palette = {
 
 export const palettes: Palette[] = [
   {
-    id: "socrates-academy",
-    name: "Socrates Academy",
+    id: "1",
+    name: "Socrates Schools",
     colors: {
       primary: "#1F3556",
       secondary: "#B79A5A",

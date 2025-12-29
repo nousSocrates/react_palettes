@@ -12,10 +12,13 @@ import { PreviewShell } from "./components/preview/PreviewShell";
 import { Dashboard } from "./components/preview/Dashboard";
 import { Courses } from "./components/preview/Courses";
 import { Lesson } from "./components/preview/Lesson";
+import { Assessment } from "./components/preview/Assessment";
+
 import { generateDarkTokens } from "./utils/darkMode";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 
-type Screen = "dashboard" | "courses" | "lesson";
+type Screen = "dashboard" | "courses" | "lesson" | "assessment";
+
 type ThemeMode = "light" | "dark";
 
 function App() {
@@ -77,9 +80,11 @@ function App() {
         <main className="preview">
           <div className="screen-switcher">
             <PreviewShell screen={screen} onNavigate={setScreen}>
+              {/* screen rendering */}
               {screen === "dashboard" && <Dashboard />}
               {screen === "courses" && <Courses />}
               {screen === "lesson" && <Lesson />}
+              {screen === "assessment" && <Assessment />}
             </PreviewShell>
           </div>
         </main>
