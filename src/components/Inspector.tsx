@@ -2,6 +2,7 @@ import { useState } from "react";
 import { copyToClipboard } from "../utils/clipboard";
 import type { Palette } from "../data/palettes";
 import { contrastRatio, passesAA } from "../utils/contrast";
+// import { evaluatePalette } from "../utils/evaluatePalette";
 
 type InspectorProps = {
   palette: Palette;
@@ -10,6 +11,8 @@ type InspectorProps = {
 export function Inspector({ palette }: InspectorProps) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const entries = Object.entries(palette.colors);
+  // const results = evaluatePalette(palette.colors);
+
   const checks = [
     {
       label: "Text on Background",
@@ -78,6 +81,21 @@ export function Inspector({ palette }: InspectorProps) {
           })}
         </ul>
       </div>
+      {/* <section className="inspector-section">
+        <h4 className="inspector-subtitle">Accessibility</h4>
+
+        <ul className="contrast-list">
+          {results.map((r) => (
+            <li key={r.label} className="contrast-row">
+              <span>{r.label}</span>
+
+              <span className={`contrast-badge ${r.pass ? "pass" : "fail"}`}>
+                {r.pass ? "PASS" : "FAIL"} ({r.ratio.toFixed(2)})
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section> */}
     </div>
   );
 }

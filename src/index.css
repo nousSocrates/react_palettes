@@ -116,8 +116,8 @@ button:hover {
 
 .palette-card {
   display: flex;
-  gap: 12px;
-  padding: 10px;
+  /* gap: 4px; */
+  padding: 2px;
   border-radius: 8px;
   background: var(--color-surface);
   color: var(--color-text-on-surface);

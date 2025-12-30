@@ -3,7 +3,7 @@ export function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <div>
-          <h1>Welcome back, Nous</h1>
+          <h1>Welcome back, Phelix</h1>
           <p>Your learning progress this week</p>
         </div>
 
